@@ -3,12 +3,12 @@
 Simple L2CAP bluetooth kernel level driver for windows to connect to Apple Airpods.
 
 It exposes the AirPods **AAP control channel** over L2CAP so
-[librepods-windows](../librepods-windowsbridge) can reach AirPods (the Microsoft
+[librepods-windows](https://github.com/will-ch-h/librepods-windowsbridge) can reach AirPods (the Microsoft
 Bluetooth stack doesn't expose L2CAP to user mode).
 
 ## Forked from Microsoft's bthecho sample
 
-This is **not** original kernel code — it's Microsoft's `bthecho` L2CAP client
+This is **not** original kernel code. it's Microsoft's `bthecho` L2CAP client
 profile driver (`bthcli`), retargeted to AirPods. The upstream is wired in as a
 git remote:
 

@@ -1,0 +1,48 @@
+name: build-driver
+
+# Compile-checks the retargeted bthcli driver. Output is an UNSIGNED .sys — to
+# load it, self-sign and enable test mode (see BUILD.md). The point of this
+# workflow is to catch setup.ps1 patches that break the build.
+
+on:
+  push:
+    paths-ignore: ['**.md', 'LICENSE']
+  pull_request:
+    paths-ignore: ['**.md', 'LICENSE']
+  workflow_dispatch:
+
+jobs:
+  build:
+    # windows-2022 ships the WDK preinstalled; windows-2025 dropped it.
+    # ponytail: if 2022 is ever retired, switch to NuGet WDK (Microsoft.Windows.WDK.x64)
+    # which works on any image but needs the .vcxproj to reference the package.
+    runs-on: windows-2022
+    strategy:
+      matrix:
+        configuration: [Debug, Release]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch + retarget bthcli
+        shell: pwsh
+        run: ./setup.ps1
+
+      - uses: microsoft/setup-msbuild@v2
+
+      - name: Build
+        run: >
+          msbuild src/bluetooth/bthecho/bthecho.sln
+          /p:Configuration=${{ matrix.configuration }}
+          /p:Platform=x64
+          /p:SignMode=Off
+          /m
+
+      - name: Upload driver package
+        uses: actions/upload-artifact@v4
+        with:
+          name: aapl2cap-${{ matrix.configuration }}-x64-unsigned
+          path: |
+            src/bluetooth/bthecho/**/x64/${{ matrix.configuration }}/**/*.sys
+            src/bluetooth/bthecho/**/x64/${{ matrix.configuration }}/**/*.inf
+            src/bluetooth/bthecho/**/x64/${{ matrix.configuration }}/**/*.cat
+          if-no-files-found: error

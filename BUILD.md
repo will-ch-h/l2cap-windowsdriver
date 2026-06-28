@@ -15,7 +15,10 @@ msbuild bthecho.sln /p:Configuration=Release /p:Platform=x64
 Output: `bthcli\sys\x64\Release\BthEchoSampleCli\` — contains the `.sys`, the
 generated `.inf`, and a `.cat`.
 
-## 2a. Dev: self-sign + test mode
+## 2. Sign (self-signed) + test mode
+
+Test mode still requires *a* signature; a free self-signed cert is enough — no
+Microsoft signing needed.
 
 ```powershell
 # one-time test cert
@@ -33,15 +36,3 @@ bcdedit /set testsigning on    # reboot; Secure Boot must be off
 Install: right-click the `.inf` → Install, or `pnputil /add-driver BthEchoSampleCli.inf /install`.
 The driver attaches when AirPods connect; verify the interface exists with the
 app's `WinL2capSocket::connectedAirPods()` (or check Device Manager → Bluetooth).
-
-## 2b. Release: attestation-signed (no test mode)
-
-The only way to load without test mode. Needs an EV code-signing cert on a
-Microsoft **Partner Center / Hardware Dev** account:
-
-1. Sign the `.cab` with the EV cert.
-2. Submit for **attestation signing** (no HLK lab tests required).
-3. Download the Microsoft-signed package; it loads on normal Windows, Secure Boot on.
-
-See the librepods-windows signing notes; this is the same wall every unsigned
-kernel driver hits.
