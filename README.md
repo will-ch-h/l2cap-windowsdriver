@@ -43,4 +43,7 @@ pwsh ./setup.ps1     # fetch + retarget into src/
 
 The consuming app finds the driver purely by the interface GUID `9eec98bb…` and
 a device path embedding the MAC (`&<mac>_c`), both of which bthcli already
-produces. No app-side change.
+produces. 
+
+## Notice of AI Use
+Generative AI was used in this repository
