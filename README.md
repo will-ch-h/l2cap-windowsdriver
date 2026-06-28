@@ -21,7 +21,7 @@ upstream   https://github.com/microsoft/windows-driver-samples.git
 - **Upstream:** [`microsoft/windows-driver-samples`](https://github.com/microsoft/windows-driver-samples), path `bluetooth/bthecho`
 - **Pinned at:** commit `d5569c0`
 - **Downstream delta:** the whole fork is [`setup.ps1`](setup.ps1) — it fetches
-  the pinned sample into `src/` (gitignored, not vendored) and applies four
+  the pinned sample into `src/' and applies four
   changes. 
 
 | What | bthcli | here | why |
