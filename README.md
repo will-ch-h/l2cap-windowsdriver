@@ -6,6 +6,9 @@ It exposes the AirPods **AAP control channel** over L2CAP so
 [librepods-windows](https://github.com/will-ch-h/librepods-windowsbridge) can reach AirPods (the Microsoft
 Bluetooth stack doesn't expose L2CAP to user mode).
 
+## Download
+Download from the Github Actions Tab 
+
 ## Forked from Microsoft's bthecho sample
 
 This is **not** original kernel code. it's Microsoft's `bthecho` L2CAP client
